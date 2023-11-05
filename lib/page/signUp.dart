@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medtrack/page/signUp.dart';
 
-class signIn extends StatelessWidget {
-  const signIn({super.key});
+class signUp extends StatelessWidget {
+  const signUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class signIn extends StatelessWidget {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(top: 20.0, left: 30.0),
               child: Text(
-                "Sign In",
+                "Sign Up",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -39,22 +38,10 @@ class signIn extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 30.0, top: 20.0, right: 30.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Sign in and get your health personalized with our AI Technology.",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            Container(
               margin: EdgeInsets.only(left: 30.0, top: 30.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Email Address",
+                "Name",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
@@ -70,7 +57,107 @@ class signIn extends StatelessWidget {
                   right: 30.0), // Adjust margins as needed
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: "Enter your email",
+                  hintText: "Enter your full name",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, top: 20.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Date of Birth",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add the email input field below
+            Container(
+              margin: EdgeInsets.only(
+                  left: 30.0,
+                  top: 10.0,
+                  right: 30.0), // Adjust margins as needed
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "blm diganti inputnya",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, top: 20.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Phone Number",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add the email input field below
+            Container(
+              margin: EdgeInsets.only(
+                  left: 30.0,
+                  top: 10.0,
+                  right: 30.0), // Adjust margins as needed
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Enter your full Phone Number",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, top: 20.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Address",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add the email input field below
+            Container(
+              margin: EdgeInsets.only(
+                  left: 30.0,
+                  top: 10.0,
+                  right: 30.0), // Adjust margins as needed
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Enter your full address",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, top: 20.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Email",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add the email input field below
+            Container(
+              margin: EdgeInsets.only(
+                  left: 30.0,
+                  top: 10.0,
+                  right: 30.0), // Adjust margins as needed
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Enter your full email",
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -101,9 +188,35 @@ class signIn extends StatelessWidget {
                 obscureText: true,
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, top: 20.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Password Confirmation",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add the password input field below
+            Container(
+              margin: EdgeInsets.only(
+                  left: 30.0,
+                  top: 10.0,
+                  right: 30.0), // Adjust margins as needed
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Enter your password",
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+            ),
             // "Sign In" button
             Container(
-              margin: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
+              margin: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
               child: ElevatedButton(
                 onPressed: () {
                   // Add sign-in logic here
@@ -116,7 +229,7 @@ class signIn extends StatelessWidget {
                   children: [
                     // Add spacing between the SVG and the button text
                     Text(
-                      "Sign In ",
+                      "Sign Up ",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -166,21 +279,11 @@ class signIn extends StatelessWidget {
               ),
             ),
             Center(
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            signUp()), // Navigate to SignUp.dart
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 70.0, bottom: 30.0),
-                  child: Text(
-                    "Don’t have an account? Sign Up.",
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
-                  ),
+              child: Container(
+                margin: EdgeInsets.only(top: 70.0, bottom: 30),
+                child: Text(
+                  "Already have an account? Sign In.",
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
                 ),
               ),
             )
