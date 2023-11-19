@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'page/signIn.dart';
+import 'page/qrPage.dart';
+import 'page/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'PlusJakartaSans'),
-        home: signIn());
+        home: splash());
   }
 }
