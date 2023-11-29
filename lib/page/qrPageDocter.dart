@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:medtrack/page/medicalRecord.dart';
 
+class medRecord {
+  static String? barcodeValue;
+}
+
 class qrPageDocter extends StatelessWidget {
   const qrPageDocter({Key? key}) : super(key: key);
 
@@ -39,10 +43,11 @@ class qrPageDocter extends StatelessWidget {
 
                         // Direct the user to the MedicalRecord page
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => medicalRecord()),
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MedicalRecord(
+                                  rawValue: medRecord.barcodeValue),
+                            ));
                       },
                       child: Text('Yes'),
                     ),

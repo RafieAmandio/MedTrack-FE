@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
- 
-void main() => runApp(const MyApp());
- 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return MaterialApp( 
-      title: 'User Home Screen', 
-      theme: ThemeData( 
-        primarySwatch: Colors.green, 
+
+void main() => runApp(const UserHome());
+
+class UserHome extends StatelessWidget {
+  const UserHome({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'User Home Screen',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
         fontFamily: 'Plus Jakarta Sans',
-      ), 
-      home: UserHomeScreen(), 
-      debugShowCheckedModeBanner: false, 
-    ); 
-  } 
+      ),
+      home: UserHomeScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
-class UserHomeScreen extends StatelessWidget{
+class UserHomeScreen extends StatelessWidget {
   bool shadowColor = false;
   double? scrolledUnderElevation;
 
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEDF5FF),
       body: Column(
@@ -39,11 +39,15 @@ class UserHomeScreen extends StatelessWidget{
                 SizedBox(width: 8),
                 Text(
                   _getFormattedDate(),
-                  style: TextStyle(fontSize: 16, color: Color(0xFF818BA0), fontFamily: 'Plus Jakarta Sans', fontWeight: FontWeight.w800),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF818BA0),
+                      fontFamily: 'Plus Jakarta Sans',
+                      fontWeight: FontWeight.w800),
                 ),
                 Spacer(),
                 MouseRegion(
-                  child: GestureDetector(
+                    child: GestureDetector(
                   onTap: () {
                     showDialog(
                       context: context,
@@ -54,7 +58,11 @@ class UserHomeScreen extends StatelessWidget{
                       },
                     );
                   },
-                  child: SvgPicture.asset('assets/Bell.svg', height: 40, width: 40,),
+                  child: SvgPicture.asset(
+                    'assets/Bell.svg',
+                    height: 40,
+                    width: 40,
+                  ),
                 ))
               ],
             ),
@@ -183,7 +191,8 @@ class UserHomeScreen extends StatelessWidget{
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 125.0, left: 145.0, right: 16.0),
+                  padding:
+                      EdgeInsets.only(top: 125.0, left: 145.0, right: 16.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text.rich(
@@ -246,10 +255,12 @@ class UserHomeScreen extends StatelessWidget{
       ),
     );
   }
+
   String _getFormattedDate() {
     // Replace this with your logic to get the current date in the desired format
     DateTime now = DateTime.now();
-    String formattedDate = "${_getDayOfWeek(now.weekday)}, ${now.day} ${_getMonth(now.month)} ${now.year}";
+    String formattedDate =
+        "${_getDayOfWeek(now.weekday)}, ${now.day} ${_getMonth(now.month)} ${now.year}";
     return formattedDate;
   }
 
@@ -262,7 +273,18 @@ class UserHomeScreen extends StatelessWidget{
   String _getMonth(int month) {
     // Replace this with your logic to get the month
     List<String> months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     return months[month - 1];
   }
