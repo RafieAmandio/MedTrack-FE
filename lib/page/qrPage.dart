@@ -20,7 +20,7 @@ class qrPage extends StatelessWidget {
                     onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UserHome()), // Replace with your QR code page
+                    MaterialPageRoute(builder: (context) => UserHomeScreen(user: {},)), // Replace with your QR code page
                   );
                 },
                   child: Icon(Icons.arrow_back_ios_rounded, size: 40),

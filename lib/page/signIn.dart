@@ -2,9 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medtrack/page/UserHome.dart';
 import 'package:medtrack/page/signUp.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class signIn extends StatelessWidget {
-  const signIn({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  Future<Map<String, dynamic>> fetchUserData() async {
+ final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
+
+ if (response.statusCode == 200) {
+   List<dynamic> users = jsonDecode(response.body);
+   return users.firstWhere((user) => user['email'] == emailController.text);
+ } else {
+   throw Exception('Failed to load user data');
+ }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +84,13 @@ class signIn extends StatelessWidget {
                   top: 10.0,
                   right: 30.0), // Adjust margins as needed
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: "Enter your email",
                   border: OutlineInputBorder(),
                 ),
               ),
-            ),
+              ),
             Container(
               margin: EdgeInsets.only(left: 30.0, top: 20.0),
               alignment: Alignment.centerLeft,
@@ -106,13 +121,17 @@ class signIn extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
               child: ElevatedButton(
-                onPressed: () {
-                  // Add logic to navigate to userHome page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserHome()),
-                  );
-                },
+                onPressed: () async {
+                  try {
+                    Map<String, dynamic> user = await fetchUserData();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserHomeScreen(user: user)),
+                    );
+                  } catch (e) {
+                    print('Failed to sign in: $e');
+                  }
+                  },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(20), // Adjust padding as needed
                 ),

@@ -1,44 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medtrack/page/qrPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() => runApp(const UserHome());
+import 'package:medtrack/page/signIn.dart';
 
-class UserHome extends StatelessWidget {
-  const UserHome({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'User Home Screen',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        fontFamily: 'Plus Jakarta Sans',
-      ),
-      home: UserHomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 class UserHomeScreen extends StatefulWidget {
-  @override
-  _UserHomeScreenState createState() => _UserHomeScreenState();
+ final Map<String, dynamic> user;
+
+ UserHomeScreen({required this.user});
+ @override
+ _UserHomeScreenState createState() => _UserHomeScreenState();
 }
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
   int _selectedIndex = 0;
-
-  // Your pages corresponding to each bottom navigation bar item
-  final List<Widget> _pages = [
-    UserHomePage(),
-    // Add other pages as needed
-    // Example: PageTwo(),
-    // Example: PageThree(),
-    // Example: PageFour(),
-  ];
+  late Future<List<dynamic>> futureData;
+  String userName = 'Admin'; // Default user name
+  List<Widget> _pages = []; // Define _pages as an instance variable
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    futureData = UserHome().fetchData();
+    fetchUserData();
+  }
+
+  
+
+  void fetchUserData() async {
+  // Replace this with your actual API endpoint
+  final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users/1'));
+
+  if (response.statusCode == 200) {
+    // Replace this with your actual data structure
+    Map<String, dynamic> userData = jsonDecode(response.body);
+    setState(() {
+      userName = userData['name'];
+    });
+  } else {
+    throw Exception('Failed to load user data');
+  }
+  setState(() {
+   userName = widget.user['name'];
+   _pages = [
+     UserHomePage(user: widget.user),
+     // Add other pages as needed
+     // Example: PageTwo(),
+     // Example: PageThree(),
+     // Example: PageFour(),
+   ];
+ });
+}
+@override
+ Widget build(BuildContext context) {
+   List<Widget> _pages = [
+   UserHomePage(user: widget.user),
+   // Add other pages as needed
+   // Example: PageTwo(),
+   // Example: PageThree(),
+   // Example: PageFour(),
+ ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFEDF5FF),
       body: _pages[_selectedIndex],
@@ -65,8 +89,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             label: 'Profile',
           ),
           // BottomNavigationBarItem(
-          //   icon: Icon(Icons.settings, color: Color(0xFF0F66FE)),
-          //   label: 'Settings',
+          //  icon: Icon(Icons.settings, color: Color(0xFF0F66FE)),
+          //  label: 'Settings',
           // ),
         ],
         currentIndex: _selectedIndex,
@@ -84,13 +108,31 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   }
 }
 
+class UserHome {
+ Future<List<dynamic>> fetchData() async {
+  // URL of the API endpoint
+  final String apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+   final response = await http.get(Uri.parse(apiUrl));
+
+   if (response.statusCode == 200) {
+     return json.decode(response.body);
+   } else {
+     throw Exception('Failed to load data');
+   }
+ }
+}
+
 class UserHomePage extends StatelessWidget {
   bool shadowColor = false;
   double? scrolledUnderElevation;
+  final Map<String, dynamic> user;
 
+ UserHomePage({required this.user});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: const Color(0xFFEDF5FF),
       body: Column(
         children: [
@@ -104,30 +146,43 @@ class UserHomePage extends StatelessWidget {
                 Text(
                   _getFormattedDate(),
                   style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF818BA0),
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontWeight: FontWeight.w800),
+                    fontSize: 16,
+                    color: Color(0xFF818BA0),
+                    fontFamily: 'Plus Jakarta Sans',
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 Spacer(),
-                MouseRegion(
-                    child: GestureDetector(
-                  onTap: () {
+                IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => UserHome()),
-                    );
+                    context,
+                    MaterialPageRoute(builder: (context) => signIn()), // Replace with your QR code page
+                  );
                   },
-                  child: SvgPicture.asset(
-                    'assets/icons/Bell.svg',
-                    height: 40,
-                    width: 40,
+                ),
+                MouseRegion(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserHomeScreen(user: {}),
+                        ),
+                      );
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/Bell.svg',
+                      height: 40,
+                      width: 40,
+                    ),
                   ),
-                ))
+                ),
               ],
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Align(
               alignment: Alignment.topLeft,
@@ -135,7 +190,7 @@ class UserHomePage extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Welcome, Admin! 👋',
+                      text: 'Welcome, ${user['username']}!! 👋',
                       style: TextStyle(
                         color: Color(0xFF090D1D),
                         fontSize: 26.14,
@@ -396,12 +451,10 @@ class MedicationWidget extends StatelessWidget {
             margin: EdgeInsets.only(right: 16),
             width: 80,
             height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
+            child: SvgPicture.asset(
+              imagePath,
+              height: 80,
+              width: 80,
             ),
           ),
           // Medication Details
