@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medtrack/page/UserHome.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class qrPage extends StatelessWidget {
@@ -15,10 +17,12 @@ class qrPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 50, left: 30),
                 child: GestureDetector(
-                  onTap: () {
-                    // Add your functionality for the clickable icon
-                    print('Clickable icon tapped!');
-                  },
+                    onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserHome()), // Replace with your QR code page
+                  );
+                },
                   child: Icon(Icons.arrow_back_ios_rounded, size: 40),
                 ),
               ),
@@ -73,6 +77,24 @@ class qrPage extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 )),
+            Container(
+                width: 300,
+                margin: EdgeInsets.only(top: 30),
+                child: Center(
+                  child: CountdownTimer(
+                    endTime: DateTime.now().millisecondsSinceEpoch + 120000,
+                    // 2 minutes
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
+                    onEnd: () {
+                      // You can add a callback here when the countdown timer reaches zero
+                    },
+                  ),
+                ),
+              ),
           ]),
         ),
       ),

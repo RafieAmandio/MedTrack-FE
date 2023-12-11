@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medtrack/page/UserHome.dart';
 import 'package:medtrack/page/signUp.dart';
 
 class signIn extends StatelessWidget {
@@ -106,7 +107,11 @@ class signIn extends StatelessWidget {
               margin: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Add sign-in logic here
+                  // Add logic to navigate to userHome page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserHome()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(20), // Adjust padding as needed
